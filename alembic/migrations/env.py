@@ -9,8 +9,13 @@ from os.path import dirname,  abspath
 
 from alembic import context
 
-from src.database import Base, DATABASE_URL
+from src.database import Base
 from src.hotels.models import Hotel
+from src.config import settings
+
+
+DATABASE_URL = settings.get_database_url()
+
 
 sys.path.insert(0, dirname(dirname(dirname(abspath(__file__)))))
 
