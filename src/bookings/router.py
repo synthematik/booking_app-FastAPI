@@ -1,9 +1,7 @@
 from fastapi import APIRouter
-from src.database import async_session_maker
-from src.bookings.models import Bookings
-from sqlalchemy import select
-from src.bookings.service import *
 
+from src.bookings.service import *
+from src.bookings.schemas import SBooking
 
 router = APIRouter(
     prefix="/bookings",
@@ -12,7 +10,7 @@ router = APIRouter(
 
 
 @router.get("")
-async def get_booking():
+async def get_booking() -> list[SBooking]:
     result = await BookingService.find_all_bookings()
     return result
 
