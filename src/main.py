@@ -2,8 +2,12 @@ from datetime import date
 from typing import Optional
 from pydantic import BaseModel
 from fastapi import FastAPI, Query, Depends
+from src.bookings.router import router as bookings_router
+
 
 app = FastAPI(debug=True)
+
+app.include_router(bookings_router)
 
 
 @app.get("/")
