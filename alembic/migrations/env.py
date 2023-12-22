@@ -11,6 +11,9 @@ from alembic import context
 
 from src.database import Base
 from src.hotels.models import Hotel
+from src.rooms.models import Room
+from src.users.models import User
+from src.bookings.models import Bookings
 from src.config import settings
 
 
