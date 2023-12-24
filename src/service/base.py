@@ -1,4 +1,4 @@
-from sqlalchemy import select
+from sqlalchemy import select, insert
 
 from src.database import async_session_maker
 
@@ -32,3 +32,14 @@ class BaseService:
             query = select(cls.model.__table__.columns).filter_by(**filter_by)
             result = await session.execute(query)
             return result.mappings().all()
+
+    @classmethod
+    async def add_data(cls, **data):
+        """
+        Функция для добавления данных в базу
+        """
+        async with async_session_maker() as session:
+            stmt = insert(cls.model).values(**data)
+            await session.execute(stmt)
+            await session.commit()
+
