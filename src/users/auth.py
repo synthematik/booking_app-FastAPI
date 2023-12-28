@@ -20,8 +20,8 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
 
 async def authenticate(email: EmailStr, password: str):
     existing_user = await UserService.find_one_or_none(email=email)
-    if not existing_user and not verify_password(password, existing_user.password):
-        raise None
+    if not existing_user or not verify_password(password, existing_user.password):
+        return None
     return existing_user
 
 
