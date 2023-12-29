@@ -41,3 +41,7 @@ class UserIdNotFoundException(BookingException):
 class UserNotFoundException(BookingException):
     status_code = status.HTTP_401_UNAUTHORIZED
 
+
+class RoomCantBeBookedException(BookingException):
+    status_code = status.HTTP_409_CONFLICT
+    default_detail = "Номер уже забронировали"
