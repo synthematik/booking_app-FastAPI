@@ -3,9 +3,9 @@ from datetime import date
 from sqlalchemy import select, and_, or_, func, insert
 
 from src.bookings.models import Bookings
-from src.database import engine, async_session_maker
+from src.database import async_session_maker
 from src.service.base import BaseService
-from src.hotels.models import Room
+from src.hotels.rooms.models import Room
 
 
 class BookingService(BaseService):
@@ -30,7 +30,7 @@ class BookingService(BaseService):
         async with async_session_maker() as session:
             booked_rooms = select(Bookings).where(
                 and_(
-                    Bookings.room_id == 1,
+                    Bookings.room_id == room_id,
                     or_(
                         and_(
                             Bookings.date_from >= date_from,
