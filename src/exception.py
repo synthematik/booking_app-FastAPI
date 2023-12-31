@@ -45,3 +45,13 @@ class UserNotFoundException(BookingException):
 class RoomCantBeBookedException(BookingException):
     status_code = status.HTTP_409_CONFLICT
     default_detail = "Номер уже забронировали"
+
+
+class DateFromCannotBeAfterDateTo(BookingException):
+    status_code = status.HTTP_400_BAD_REQUEST
+    default_detail = "Проверьте дату заезда"
+
+
+class CannotBookHotelForLongTime(BookingException):
+    status_code = status.HTTP_400_BAD_REQUEST
+    default_detail = "Срок бронирования должен быть меньше месяца"
