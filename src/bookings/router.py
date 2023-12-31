@@ -28,3 +28,9 @@ async def create_booking(
     booking = await BookingService.create(user.id, room_id, date_from, date_to)
     if not booking:
         raise RoomCantBeBookedException()
+
+
+@router.delete("/{booking_id}/")
+async def delete_booking(booking_id: int, user: User = Depends(get_current_user)):
+    await BookingService.delete(id=booking_id, user_id=user.id)
+    return {"status": 200}
