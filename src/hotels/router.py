@@ -13,7 +13,13 @@ router = APIRouter(
 )
 
 
-@router.get("/{location}/")
+@router.get("/")
+async def get_all_hotels() -> list[SHotelInfo]:
+    hotels = await HotelService.find_all()
+    return hotels
+
+
+@router.get("/{location}/", name="get_hotel_by_location")
 async def get_hotels_by_location(
         location: str, date_from: date, date_to: date
 ) -> list[SHotelInfo]:

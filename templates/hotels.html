@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title %}
+Лента
+{% endblock %}
+
+{% block head %}
+    <style>
+        .search-form {
+            margin-top: 40px;
+        }
+
+        .search-form input,
+        .search-form button {
+            margin-right: 5px;
+        }
+    </style>
+
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <form class="search-form" id="search-form">
+        <div class="input-group">
+            <input type="text" class="form-control" id="location" placeholder="Введите местоположение" required>
+            <input type="date" class="form-control" id="date_from" required>
+            <input type="date" class="form-control" id="date_to" required>
+            <button type="button" class="btn btn-secondary">Поиск</button>
+        </div>
+    </form>
+
+    <div class="row" style="margin-top: 3%;">
+        {% for hotel in hotels %}
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="{{ url_for('static', path='images/' + hotel.image_id|string + '.webp')}}"
+                            class="card-img-top img-fluid" alt="Фото отеля" style="object-fit: cover; height: 300px; width: 300px;">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ hotel.name }}</h5>
+                            <p class="card-text">{{ hotel.location }}</p>
+                            <p class="card-text">
+                                {% for service in hotel.services %}
+                                {{ service }}
+                                {% if not loop.last %}, {% endif %}
+                                {% endfor %}
+                            </p>
+                            <!--<p class="card-text">Осталось номеров: {{ hotel.rooms_quantity }}</p>-->
+                            <p class="card-text" style="color: gold; text-shadow: 1px 1px 2px #000;">
+                                {% for _ in range(hotel.stars) %}
+                                ★
+                                {% endfor %}
+                            </p>
+                            <a href="#" class="btn btn-secondary">Выбрать номер</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
