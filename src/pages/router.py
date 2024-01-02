@@ -36,5 +36,6 @@ async def get_hotels_page(request: Request, hotels=Depends(get_all_hotels)):
 
 @router.get("/{location}/")
 async def get_hotels_by_location_page(request: Request, hotels=Depends(get_hotels_by_location)):
-    return templates.TemplateResponse("hotels/hotels_location.html", {"request": request, "hotels": hotels})
-
+    return templates.TemplateResponse(
+        "hotels/hotels_location.html", {"request": request, "hotels": hotels}
+    )
