@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block head %}
+    <script>
+        async function registerUser() {
+            const url = "http://localhost:8000/auth/register/";
+            const formData = new FormData();
+            formData.append('email', document.getElementById("email").value);
+            formData.append('password', document.getElementById("password").value);
+
+            await fetch(url, {
+                method: 'POST',
+                body: formData,
+            }).then(response => {
+                if (response.status === 200) {
+                    window.location.replace("/pages/hotels/");
+                } else {
+                    return response.json();
+                }
+            });
+        }
+    </script>
+{% endblock %}
+
+{% block body %}
+<div class="flex items-center justify-center h-screen bg-gray-100" style="margin-left: 37%; margin-top: 10%;">
+        <div class="card p-4" style="width: 400px;">
+            <div class="form-group">
+                <label for="email" class="mb-1">Email</label>
+                <input class="form-control mb-2" id="email" name="email" type="text" value="" placeholder="name@mail.ru">
+
+                <label for="password" class="mb-1">Пароль</label>
+                <input class="form-control mb-3" id="password" name="password" type="password" value="" placeholder="********">
+                <span id="wrong_credentials" class="text-sm text-danger"></span>
+            </div>
+            <button onclick="registerUser()" class="btn btn-secondary btn-block mb-3">Зарегистрироваться</button>
+            <span class="mt-2">
+                Уже зарегистрированы?
+                <a href="/pages/login/"
+                   class="underline text-blue-600 hover:text-blue-800 visited:text-purple-600">
+                    Войти
+                </a>
+            </span>
+        </div>
+    </div>
+{% endblock %}

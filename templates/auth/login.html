@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block head %}
+    <script>
+        async function loginUser() {
+            const wrongCredentialsSpan = document.getElementById("wrong_credentials");
+            wrongCredentialsSpan.textContent = "";
+
+            const url = "http://localhost:8000/auth/login";
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+
+            await fetch(url, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'}, 
+                body: JSON.stringify({email: email, password: password}),
+            }).then(response => {
+                if (response.status === 200) {
+                    window.location.replace("/pages/hotels/");
+                } else {
+                    return response.json();
+                }
+            }).then(data => {
+                if (data && data.detail) {
+                    wrongCredentialsSpan.textContent = data.detail;
+                }
+            });
+        }
+    </script>
+{% endblock %}
+
+{% block body %}
+    <div class="flex items-center justify-center h-screen bg-gray-100" style="margin-left: 37%; margin-top: 10%;">
+        <div class="card p-4" style="width: 400px;">
+            <div class="form-group">
+                <label for="email" class="mb-1">Email</label>
+                <input class="form-control mb-2" id="email" name="email" type="text" value="" placeholder="name@mail.ru">
+
+                <label for="password" class="mb-1">Пароль</label>
+                <input class="form-control mb-3" id="password" name="password" type="password" value="" placeholder="********">
+                <span id="wrong_credentials" class="text-sm text-danger"></span>
+            </div>
+            <button onclick="loginUser()" class="btn btn-secondary btn-block mb-3">Войти</button>
+            <span class="mt-2">
+                Не зарегистрированы?
+                <a href="/pages/register/"
+                   class="underline text-blue-600 hover:text-blue-800 visited:text-purple-600">
+                    Зарегистрироваться
+                </a>
+            </span>
+        </div>
+    </div>
+{% endblock %}
