@@ -1,10 +1,12 @@
 from fastapi import APIRouter, Depends
+from pydantic import parse_obj_as
 
 from src.bookings.service import *
 from src.bookings.schemas import SBooking
 from src.users.models import User
 from src.users.dependencies import get_current_user
 from src.exception import *
+from src.tasks.tasks import send_email_confirm_message
 
 
 router = APIRouter(
@@ -15,7 +17,7 @@ router = APIRouter(
 
 @router.get("")
 async def get_booking(user: User = Depends(get_current_user)) -> list[SBooking]:
-    return await BookingService.find_all_bookings(user_id=user.id)
+    return await BookingService.find_all(user_id=user.id)
 
 
 @router.post("")
@@ -26,8 +28,11 @@ async def create_booking(
         user: User = Depends(get_current_user),
 ):
     booking = await BookingService.create(user.id, room_id, date_from, date_to)
+    bookings_dict = parse_obj_as(SBooking, booking).dict()
     if not booking:
         raise RoomCantBeBookedException()
+    send_email_confirm_message.delay(bookings_dict, user.email)
+    return bookings_dict
 
 
 @router.delete("/{booking_id}/")
