@@ -6,6 +6,7 @@ from src.users.auth import get_password_hash, authenticate, create_access_token
 from src.users.models import User
 from src.users.dependencies import get_current_user
 from src.exception import *
+from src.tasks.tasks import send_account_confirmation_message
 
 
 router = APIRouter(
@@ -20,6 +21,7 @@ async def register_user(user_data: SUserAuth):
     if existing_user:
         raise UserAlreadyExistsException()
     hashed_password = get_password_hash(user_data.password)
+    send_account_confirmation_message.delay(user_data.email)
     await UserService.add_data(email=user_data.email, password=hashed_password)
 
 
