@@ -34,8 +34,8 @@ def send_email_confirm_message(booking: dict, email_to: EmailStr):
 
 @celery_app.task
 def send_account_confirmation_message(user_email_to: EmailStr):
-    email_to_test = "garfild439@gmail.com"
-    message = create_account_confirmation_templates(user_email_to=email_to_test)
+    #email_to_test = "XXXX@gmail.com"
+    message = create_account_confirmation_templates(user_email_to=user_email_to)
 
     with smtplib.SMTP_SSL(settings.SMTP_HOST, settings.SMTP_PORT) as server:
         server.login(settings.SMTP_USER, settings.SMTP_PASS)
