@@ -11,7 +11,8 @@ from src.pages.router import router as pages_router
 from src.files.router import router as files_router
 from src.config import settings
 from src.database import engine
-from src.admin import *
+from src.admin.admin import *
+from src.admin.auth import authentication_backend
 
 from fastapi_cache import FastAPICache
 from fastapi_cache.backends.redis import RedisBackend
@@ -62,7 +63,7 @@ async def startup():
     FastAPICache.init(RedisBackend(redis), prefix="fastapi-cache")
 
 
-admin = Admin(app, engine)
+admin = Admin(app, engine, authentication_backend=authentication_backend)
 
 admin.add_view(UserAdmin)
 
