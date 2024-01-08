@@ -11,4 +11,5 @@ ENV/
 .idea/
 .idea
 .env
+.env_example
 /venv/
