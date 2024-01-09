@@ -1,9 +1,9 @@
-from src.hotels.models import Hotel
-from src.users.models import User
-from src.bookings.models import Bookings
-from src.hotels.rooms.models import Room
-
 from sqladmin import ModelView
+
+from src.bookings.models import Bookings
+from src.hotels.models import Hotel
+from src.hotels.rooms.models import Room
+from src.users.models import User
 
 
 class UserAdmin(ModelView, model=User):
@@ -33,4 +33,3 @@ class RoomAdmin(ModelView, model=Room):
     name_plural = "Комнаты"
     name = "Комната"
     icon = "fa-solid fa-bed"
-

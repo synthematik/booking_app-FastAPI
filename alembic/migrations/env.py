@@ -10,11 +10,11 @@ from os.path import dirname,  abspath
 from alembic import context
 
 from src.database import Base
-from src.hotels.models import Hotel
-from src.hotels.rooms.models import Room
-from src.users.models import User
-from src.bookings.models import Bookings
-from src.config import settings
+from src.hotels.models import Hotel  # no_delete
+from src.hotels.rooms.models import Room  # no_delete
+from src.users.models import User  # no_delete
+from src.bookings.models import Bookings  # no_delete
+from src.config import settings  # no_delete
 
 
 DATABASE_URL = settings.get_database_url()

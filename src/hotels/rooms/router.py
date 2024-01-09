@@ -5,7 +5,6 @@ from fastapi import APIRouter
 from src.hotels.rooms.schemas import SRoomInfo
 from src.hotels.rooms.service import RoomService
 
-
 router = APIRouter(
     prefix="/hotels",
     tags=["Hotels"]

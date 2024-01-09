@@ -1,26 +1,21 @@
 from fastapi import FastAPI
-from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
-
-from src.bookings.router import router as bookings_router
-
-from src.users.router import router as users_router
-from src.hotels.router import router as hotels_router
-from src.hotels.rooms.router import router as rooms_router
-from src.pages.router import router as pages_router
-from src.files.router import router as files_router
-from src.config import settings
-from src.database import engine
-from src.admin.admin import *
-from src.admin.auth import authentication_backend
-
+from fastapi.staticfiles import StaticFiles
 from fastapi_cache import FastAPICache
 from fastapi_cache.backends.redis import RedisBackend
-
+from redis import asyncio as aioredis
 from sqladmin import Admin
 
-from redis import asyncio as aioredis
-
+from src.admin.admin import *
+from src.admin.auth import authentication_backend
+from src.bookings.router import router as bookings_router
+from src.config import settings
+from src.database import engine
+from src.files.router import router as files_router
+from src.hotels.rooms.router import router as rooms_router
+from src.hotels.router import router as hotels_router
+from src.pages.router import router as pages_router
+from src.users.router import router as users_router
 
 app = FastAPI(debug=True)
 

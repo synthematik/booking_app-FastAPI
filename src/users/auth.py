@@ -1,11 +1,11 @@
 from datetime import datetime, timedelta
+
 from jose import jwt
 from passlib.context import CryptContext
 from pydantic import EmailStr
 
-from src.users.service import UserService
 from src.config import settings
-
+from src.users.service import UserService
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
@@ -33,4 +33,3 @@ def create_access_token(data: dict) -> str:
         to_encode, settings.SECRET_KEY, settings.ALGORITHM
     )
     return encode_jwt
-

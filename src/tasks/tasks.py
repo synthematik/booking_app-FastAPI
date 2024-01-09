@@ -1,15 +1,13 @@
-from src.tasks.celerys import celery_app
-
-from PIL import Image
-
+import smtplib
 from pathlib import Path
 
+from PIL import Image
 from pydantic import EmailStr
 
-from src.tasks.email_templates import create_bookings_confirmation_template, create_account_confirmation_templates
-
 from src.config import settings
-import smtplib
+from src.tasks.celerys import celery_app
+from src.tasks.email_templates import (create_account_confirmation_templates,
+                                       create_bookings_confirmation_template)
 
 
 @celery_app.task
@@ -24,7 +22,6 @@ def process_picture(picture_file_path: str):
 
 @celery_app.task
 def send_email_confirm_message(booking: dict, email_to: EmailStr):
-    #email_to_test = "XXXX@gmail.com"
     message = create_bookings_confirmation_template(booking=booking, email_to=email_to)
 
     with smtplib.SMTP_SSL(settings.SMTP_HOST, settings.SMTP_PORT) as server:
@@ -34,7 +31,6 @@ def send_email_confirm_message(booking: dict, email_to: EmailStr):
 
 @celery_app.task
 def send_account_confirmation_message(user_email_to: EmailStr):
-    #email_to_test = "XXXX@gmail.com"
     message = create_account_confirmation_templates(user_email_to=user_email_to)
 
     with smtplib.SMTP_SSL(settings.SMTP_HOST, settings.SMTP_PORT) as server:

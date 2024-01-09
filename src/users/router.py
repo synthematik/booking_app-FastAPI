@@ -1,13 +1,12 @@
-from fastapi import APIRouter, Response, Depends
+from fastapi import APIRouter, Depends, Response
 
-from src.users.schemas import SUserAuth
-from src.users.service import UserService
-from src.users.auth import get_password_hash, authenticate, create_access_token
-from src.users.models import User
-from src.users.dependencies import get_current_user
 from src.exception import *
 from src.tasks.tasks import send_account_confirmation_message
-
+from src.users.auth import authenticate, create_access_token, get_password_hash
+from src.users.dependencies import get_current_user
+from src.users.models import User
+from src.users.schemas import SUserAuth
+from src.users.service import UserService
 
 router = APIRouter(
     prefix="/auth",
@@ -44,4 +43,3 @@ async def logout_user(response: Response):
 @router.get("/me/")
 async def read_me(current_user: User = Depends(get_current_user)):
     return current_user
-

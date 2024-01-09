@@ -1,6 +1,7 @@
-from src.database import Base
-from sqlalchemy import Column, Integer, ForeignKey, Date, Computed
+from sqlalchemy import Column, Computed, Date, ForeignKey, Integer
 from sqlalchemy.orm import relationship
+
+from src.database import Base
 
 
 class Bookings(Base):
@@ -20,4 +21,3 @@ class Bookings(Base):
 
     def __str__(self):
         return f"Booking - {self.id}"
-

@@ -43,5 +43,3 @@ def create_account_confirmation_templates(
     )
 
     return email_message
-
-

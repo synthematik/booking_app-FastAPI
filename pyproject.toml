@@ -1,0 +1,9 @@
+[tool.black]
+line-length = 88
+target-version = ['py312']
+
+[tool.autoflake]
+check_diff = true
+
+[tool.pyright]
+include = ["src"]

@@ -1,12 +1,8 @@
 from sqladmin.authentication import AuthenticationBackend
 from starlette.requests import Request
-from starlette.responses import RedirectResponse
 
-from src.exception import UserIncorrectPasswordException
 from src.users.auth import authenticate, create_access_token
 from src.users.dependencies import get_current_user
-
-from typing import Optional
 
 
 class AdminAuth(AuthenticationBackend):

@@ -1,15 +1,12 @@
-import asyncio
 from datetime import date, datetime
 
-from fastapi import APIRouter
-from fastapi import Query
-
-from src.hotels.service import HotelService
-from src.hotels.schemas import SHotelInfo
-from src.exception import DateFromCannotBeAfterDateTo, CannotBookHotelForLongTime
-
+from fastapi import APIRouter, Query
 from fastapi_cache.decorator import cache
 
+from src.exception import (CannotBookHotelForLongTime,
+                           DateFromCannotBeAfterDateTo)
+from src.hotels.schemas import SHotelInfo
+from src.hotels.service import HotelService
 
 router = APIRouter(
     prefix="/hotels",
@@ -36,7 +33,3 @@ async def get_hotels_by_location(
         raise CannotBookHotelForLongTime
     hotels = await HotelService.find_all_hotels(location, date_from, date_to)
     return hotels
-
-
-
-

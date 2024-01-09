@@ -1,13 +1,12 @@
 from fastapi import APIRouter, Depends
 from pydantic import parse_obj_as
 
-from src.bookings.service import *
 from src.bookings.schemas import SBooking
-from src.users.models import User
-from src.users.dependencies import get_current_user
+from src.bookings.service import *
 from src.exception import *
 from src.tasks.tasks import send_email_confirm_message
-
+from src.users.dependencies import get_current_user
+from src.users.models import User
 
 router = APIRouter(
     prefix="/bookings",

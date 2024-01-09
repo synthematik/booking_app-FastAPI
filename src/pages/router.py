@@ -1,15 +1,13 @@
-from fastapi import APIRouter, Request, Depends
-from fastapi.templating import Jinja2Templates
+from fastapi import APIRouter, Depends, Request
 from fastapi.responses import HTMLResponse
+from fastapi.templating import Jinja2Templates
 
-from src.hotels.router import get_hotels_by_location, get_all_hotels
-
+from src.hotels.router import get_all_hotels, get_hotels_by_location
 
 router = APIRouter(
     prefix="/pages",
     tags=["Фронтенд"]
 )
-
 
 templates = Jinja2Templates(directory="templates/")
 
@@ -30,12 +28,27 @@ async def register(request: Request):
 
 
 @router.get("/hotels/", name='hotels_list')
-async def get_hotels_page(request: Request, hotels=Depends(get_all_hotels)):
-    return templates.TemplateResponse("hotels/hotels.html", {"request": request, "hotels": hotels})
+async def get_hotels_page(
+        request: Request,
+        hotels=Depends(get_all_hotels)
+):
+    return templates.TemplateResponse(
+        "hotels/hotels.html",
+        {
+            "request": request,
+            "hotels": hotels,
+        }
+    )
 
 
 @router.get("/{location}/")
-async def get_hotels_by_location_page(request: Request, hotels=Depends(get_hotels_by_location)):
+async def get_hotels_by_location_page(
+        request: Request,
+        hotels=Depends(get_hotels_by_location)
+):
     return templates.TemplateResponse(
-        "hotels/hotels_location.html", {"request": request, "hotels": hotels}
+        "hotels/hotels_location.html", {
+            "request": request,
+            "hotels": hotels,
+        }
     )
