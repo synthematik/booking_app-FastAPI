@@ -89,6 +89,7 @@ class BookingService(BaseService):
                 else:
                     return None
         except (SQLAlchemyError, Exception) as e:
+            msg = ''
             if isinstance(e, SQLAlchemyError):
                 msg = "Database error"
             elif isinstance(e, SQLAlchemyError):
