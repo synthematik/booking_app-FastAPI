@@ -7,6 +7,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi_cache import FastAPICache
 from fastapi_cache.backends.redis import RedisBackend
 from fastapi.requests import Request
+from fastapi_versioning import VersionedFastAPI
 from redis import asyncio as aioredis
 from sqladmin import Admin
 
@@ -24,15 +25,13 @@ from src.logger import logger
 
 app = FastAPI(debug=True)
 
+app = VersionedFastAPI(app, version_format='{major}', prefix_format='/v{major}')
 
 sentry_sdk.init(
     dsn="https://1a66e4706754e5fb0f73ee1300def1ce@o4506581752217600.ingest.sentry.io/4506581756084224",
     traces_sample_rate=1.0,
     profiles_sample_rate=1.0,
 )
-
-
-app.mount("/static", StaticFiles(directory="static"), name="static")
 
 app.include_router(users_router)
 
@@ -93,3 +92,5 @@ async def add_process_time_header(request: Request, call_next):
         "process_time": round(process_time, 4)
     })
     return response
+
+app.mount("/static", StaticFiles(directory="static"), name="static")

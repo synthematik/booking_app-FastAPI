@@ -1,4 +1,5 @@
 from fastapi import APIRouter, Depends
+from fastapi_versioning import version
 from pydantic import parse_obj_as
 
 from src.bookings.schemas import SBooking
@@ -20,6 +21,7 @@ async def get_booking(user: User = Depends(get_current_user)) -> list[SBooking]:
 
 
 @router.post("")
+@version(1)
 async def create_booking(
         room_id: int,
         date_from: date,
