@@ -1,12 +1,12 @@
 import time
-import sentry_sdk
 
+import sentry_sdk
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.requests import Request
 from fastapi.staticfiles import StaticFiles
 from fastapi_cache import FastAPICache
 from fastapi_cache.backends.redis import RedisBackend
-from fastapi.requests import Request
 from fastapi_versioning import VersionedFastAPI
 from redis import asyncio as aioredis
 from sqladmin import Admin
@@ -19,9 +19,9 @@ from src.database import engine
 from src.files.router import router as files_router
 from src.hotels.rooms.router import router as rooms_router
 from src.hotels.router import router as hotels_router
+from src.logger import logger
 from src.pages.router import router as pages_router
 from src.users.router import router as users_router
-from src.logger import logger
 
 app = FastAPI(debug=True)
 
