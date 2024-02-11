@@ -11,4 +11,5 @@ ENV/
 .idea/
 .idea
 .env
+.env-non-dev
 /venv/
